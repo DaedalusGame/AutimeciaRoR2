@@ -1,0 +1,11 @@
+ManifestFileVersion: 0
+CRC: 4206864184
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: myassetbundle
+      Dependencies: {}
+    Info_1:
+      Name: autimeciabundle
+      Dependencies:
+        Dependency_0: myassetbundle

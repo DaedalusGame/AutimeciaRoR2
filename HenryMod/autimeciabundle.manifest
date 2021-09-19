@@ -1,0 +1,214 @@
+ManifestFileVersion: 0
+CRC: 3495172419
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 23656e1deac54f0d04764a0fcbba1dc9
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 0a5de678f44775c088ed49d66a3c5f8b
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 54
+  Script: {instanceID: 0}
+- Class: 74
+  Script: {instanceID: 0}
+- Class: 90
+  Script: {instanceID: 0}
+- Class: 91
+  Script: {instanceID: 0}
+- Class: 95
+  Script: {instanceID: 0}
+- Class: 96
+  Script: {instanceID: 0}
+- Class: 108
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 9a68da65c907acb4eb4dbcd042f172e7, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 261c50d8a80898e4ebf2e8e415ea6766, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: f6bbea9fa51abaa468cca212f130865f, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 2ff1ea4319cde9347b4265ec3aecc1ef, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 29f74e6c7bf456c4ca1be4df79101b8a, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 134
+  Script: {instanceID: 0}
+- Class: 135
+  Script: {instanceID: 0}
+- Class: 136
+  Script: {instanceID: 0}
+- Class: 137
+  Script: {instanceID: 0}
+- Class: 198
+  Script: {instanceID: 0}
+- Class: 199
+  Script: {instanceID: 0}
+- Class: 212
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+- Class: 319
+  Script: {instanceID: 0}
+Assets:
+- Assets/AutimeciaAssets/BouncerGhost.prefab
+- Assets/Shaders/fx/hgdamagenumber.shader
+- Assets/AutimeciaAssets/Textures/autimecia_hat_grey.png
+- Assets/AutimeciaAssets/Textures/beam.png
+- Assets/AutimeciaAssets/Materials/matWaterTrail.mat
+- Assets/AutimeciaAssets/Animations/FloatRight.anim
+- Assets/AutimeciaAssets/Animations/FloatBack.anim
+- Assets/AutimeciaAssets/Materials/matCrocoDiseaseTrail.mat
+- Assets/Shaders/postprocess/hgoutlinehighlight.shader
+- Assets/AutimeciaAssets/Textures/texOmniHitspark4Mask.png
+- Assets/AutimeciaAssets/Textures/chaos_shield.png
+- Assets/Shaders/deferred/hgstandard.shader
+- Assets/AutimeciaAssets/WaveBeam.prefab
+- Assets/AutimeciaAssets/Textures/chaos_projectile.png
+- Assets/AutimeciaAssets/Textures/texSmokePuffSpeckledNormal.png
+- Assets/AutimeciaAssets/Animations/DefaultFloat.anim
+- Assets/AutimeciaAssets/Textures/texSmokePuffSpeckledDisplacement.png
+- Assets/Shaders/deferred/hgwavycloth.shader
+- Assets/Shaders/ui/hguicustomblend.shader
+- Assets/AutimeciaAssets/Materials/matScarf.mat
+- Assets/AutimeciaAssets/Materials/matHatGrey.mat
+- Assets/Shaders/postprocess/hgscopeshader.shader
+- Assets/AutimeciaAssets/Textures/chaos_buff.png
+- Assets/AutimeciaAssets/Materials/matEmbersBlack.mat
+- Assets/AutimeciaAssets/Textures/chaos_water.png
+- Assets/AutimeciaAssets/Textures/chaos_earth.png
+- Assets/AutimeciaAssets/Textures/beam_light.png
+- Assets/AutimeciaAssets/Mesh/donut1Mesh.asset
+- Assets/Shaders/fx/hgcloudremap.shader
+- Assets/AutimeciaAssets/Animations/TrilbySpin.anim
+- Assets/AutimeciaAssets/Textures/texFluidSprayLarge.png
+- Assets/AutimeciaAssets/Textures/texLightning3Mask.png
+- Assets/AutimeciaAssets/mdlTrilbyGhost.prefab
+- Assets/AutimeciaAssets/mdlTrilby.prefab
+- Assets/AutimeciaAssets/mdlWhirlwind.prefab
+- Assets/AutimeciaAssets/Textures/texCloudOrganic2.png
+- Assets/Shaders/deferred/hgtriplanarterrainblend.shader
+- Assets/AutimeciaAssets/Materials/matHat.mat
+- Assets/AutimeciaAssets/mdlWaterExplosion.prefab
+- Assets/AutimeciaAssets/Textures/autimecia_scarf.png
+- Assets/AutimeciaAssets/Textures/tex_wind.png
+- Assets/AutimeciaAssets/Mesh/donut7Mesh.asset
+- Assets/AutimeciaAssets/Reel.prefab
+- Assets/AutimeciaAssets/Mesh/IcosphereHighres.asset
+- Assets/Shaders/environment/hgwaterfall.shader
+- Assets/AutimeciaAssets/Animations/FloatForward.anim
+- Assets/Shaders/fx/hgintersectioncloudremap.shader
+- Assets/AutimeciaAssets/Textures/texCloudOrganicNormal.png
+- Assets/AutimeciaAssets/Materials/matBeam.mat
+- Assets/Shaders/environment/hgdistantwater.shader
+- Assets/AutimeciaAssets/mdlWaterSplash.prefab
+- Assets/AutimeciaAssets/Materials/matTornadoDouble.mat
+- Assets/AutimeciaAssets/Textures/texParticleDust1Mask.png
+- Assets/AutimeciaAssets/Textures/autimecia_hat_wing.png
+- Assets/AutimeciaAssets/Textures/trail_remap_water.png
+- Assets/AutimeciaAssets/Materials/matWoundSphericalBackdrop.mat
+- Assets/AutimeciaAssets/Animations/FloatLeft.anim
+- Assets/AutimeciaAssets/Bouncer.prefab
+- Assets/AutimeciaAssets/mdlWindArea.prefab
+- Assets/AutimeciaAssets/Textures/tex_bubble.png
+- Assets/Shaders/ui/hguioverbrighten.shader
+- Assets/AutimeciaAssets/Materials/matEmbers.mat
+- Assets/AutimeciaAssets/Animations/TrilbyDisappear.anim
+- Assets/AutimeciaAssets/ReelBoard.prefab
+- Assets/AutimeciaAssets/Materials/matOpaqueWaterSplash.mat
+- Assets/AutimeciaAssets/Animations/AimYawMask.mask
+- Assets/Shaders/postprocess/hgscreendamage.shader
+- Assets/AutimeciaAssets/Textures/beam_lighter.png
+- Assets/AutimeciaAssets/Textures/texRampCrocoDisease.png
+- Assets/AutimeciaAssets/Materials/matBubble.mat
+- Assets/AutimeciaAssets/Textures/texRampGenericFire.png
+- Assets/AutimeciaAssets/Textures/texRampHealing.png
+- Assets/AutimeciaAssets/Mesh/donut6Mesh.asset
+- Assets/AutimeciaAssets/Textures/autimecia_hair.png
+- Assets/Shaders/fx/hgopaquecloudremap.shader
+- Assets/AutimeciaAssets/Materials/matWoundSlashTrail.mat
+- Assets/AutimeciaAssets/Materials/matTreebotSyringeTrailHealing.mat
+- Assets/AutimeciaAssets/mdlAutimecia.prefab
+- Assets/AutimeciaAssets/Textures/water_splash1.png
+- Assets/AutimeciaAssets/Animations/animTrilby.controller
+- Assets/AutimeciaAssets/mdlBubble.prefab
+- Assets/AutimeciaAssets/Shield.prefab
+- Assets/AutimeciaAssets/Textures/face_test.png
+- Assets/AutimeciaAssets/mdlBeam.prefab
+- Assets/Shaders/fx/hgforwardplanet.shader
+- Assets/AutimeciaAssets/Textures/beam_inner.png
+- Assets/AutimeciaAssets/Materials/matWings.mat
+- Assets/Shaders/fx/hgvertexonly.shader
+- Assets/AutimeciaAssets/Textures/water_splash2.png
+- Assets/Shaders/ui/hguiignorez.shader
+- Assets/AutimeciaAssets/Materials/matCrocoGooLarge.mat
+- Assets/AutimeciaAssets/Materials/matBeamStart.mat
+- Assets/AutimeciaAssets/Mesh/donut5Mesh.asset
+- Assets/AutimeciaAssets/Textures/texSmokePuffSmallNormal.png
+- Assets/AutimeciaAssets/Textures/chaos_area.png
+- Assets/AutimeciaAssets/Animations/animAutimecia.controller
+- Assets/Shaders/fx/hgdistortion.shader
+- Assets/AutimeciaAssets/Textures/texShockwaveRing2Mask.png
+- Assets/Shaders/ui/hguiblur.shader
+- Assets/Shaders/environment/hggrass.shader
+- Assets/AutimeciaAssets/Textures/texCloudDifferenceBW1.png
+- Assets/AutimeciaAssets/Textures/chaos_cursor.png
+- Assets/AutimeciaAssets/Textures/texCloudDifferenceBW2.png
+- Assets/AutimeciaAssets/Textures/autimecia_body.png
+- Assets/AutimeciaAssets/Icons/texAutimeciaIcon.png
+- Assets/AutimeciaAssets/AutimeciaDisplay.prefab
+- Assets/AutimeciaAssets/Null.prefab
+- Assets/AutimeciaAssets/Materials/matFaceTest.mat
+- Assets/Shaders/ui/hguibarremap.shader
+- Assets/AutimeciaAssets/Textures/chaos_wind.png
+- Assets/AutimeciaAssets/Textures/autimecia_wing.png
+- Assets/AutimeciaAssets/Textures/texCrocoSlashMask 1.png
+- Assets/AutimeciaAssets/Animations/TrilbyBeamDisappear.anim
+- Assets/AutimeciaAssets/Materials/matHatWings.mat
+- Assets/Shaders/fx/hgsolidparallax.shader
+- Assets/AutimeciaAssets/Materials/matCrocoSlashDistortion.mat
+- Assets/AutimeciaAssets/Materials/BubblePhysics.physicMaterial
+- Assets/AutimeciaAssets/Animations/TrilbyBeam.anim
+- Assets/AutimeciaAssets/Textures/texCloudOrganic1.png
+- Assets/AutimeciaAssets/Animations/TrilbyFire.anim
+- Assets/AutimeciaAssets/Materials/matBody.mat
+- Assets/AutimeciaAssets/Mesh/donut3Mesh.asset
+- Assets/AutimeciaAssets/Materials/matBeamOuter.mat
+- Assets/AutimeciaAssets/WaveBeamGhost.prefab
+- Assets/AutimeciaAssets/Mesh/donut8Mesh.asset
+- Assets/AutimeciaAssets/Textures/chaos_fire.png
+- Assets/AutimeciaAssets/Materials/matBeamInner.mat
+- Assets/Shaders/ui/hguianimatealpha.shader
+- Assets/AutimeciaAssets/Materials/matOpaqueWaterFoam.mat
+- Assets/AutimeciaAssets/Textures/texRampCrocoDiseaseDark.png
+- Assets/AutimeciaAssets/Textures/autimecia_hat.png
+- Assets/Shaders/postprocess/hgsobelbuffer.shader
+- Assets/AutimeciaAssets/Mesh/donut4Mesh.asset
+- Assets/AutimeciaAssets/Mesh/donut2Mesh.asset
+- Assets/AutimeciaAssets/Materials/matTracerBright.mat
+- Assets/AutimeciaAssets/Textures/texRampLunarWardDecal.png
+- Assets/AutimeciaAssets/Materials/matRipple.mat
+- Assets/Shaders/deferred/hgsnowtopped.shader
+- Assets/AutimeciaAssets/Animations/AimPitchMask.mask
+- Assets/AutimeciaAssets/Animations/WingMask.mask
+Dependencies:
+- C:/Repos/HenryTutorial-master/HenryTutorial-master/HenryMod/myassetbundle
