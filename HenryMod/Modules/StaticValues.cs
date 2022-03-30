@@ -15,5 +15,11 @@ namespace Autimecia.Modules
         internal const float gunDamageCoefficient = 4.2f;
 
         internal const float bombDamageCoefficient = 16f;
+
+
+        internal const float hatBeamDamageInitial = 6f;
+        internal const float hatBeamDamageDiminish = 0.1f;
+        internal const float faustDamage = 4.2f;
+        internal const float faustRewardPerHit = 0.03f;
     }
 }

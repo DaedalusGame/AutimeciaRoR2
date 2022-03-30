@@ -165,9 +165,9 @@ namespace Autimecia.Modules
             return skillDef;
         }
 
-        internal static SkillDef CreateSkillDef(SkillDefInfo skillDefInfo)
+        internal static T CreateSkillDef<T>(SkillDefInfo skillDefInfo) where T : SkillDef
         {
-            SkillDef skillDef = ScriptableObject.CreateInstance<SkillDef>();
+            T skillDef = ScriptableObject.CreateInstance<T>();
 
             skillDef.skillName = skillDefInfo.skillName;
             skillDef.skillNameToken = skillDefInfo.skillNameToken;

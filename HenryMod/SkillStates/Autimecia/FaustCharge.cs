@@ -1,4 +1,6 @@
-﻿using EntityStates;
+﻿using Autimecia.Utils;
+using EntityStates;
+using RoR2;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,6 +11,7 @@ namespace Autimecia.SkillStates
     class FaustCharge : BaseSkillState
     {
         protected Animator animator;
+        protected AutimeciaTracker tracker;
         public float durationMin;
         public float durationMax;
         public float chargeMin = 0.7f;
@@ -21,6 +24,10 @@ namespace Autimecia.SkillStates
         public override void OnEnter()
         {
             base.OnEnter();
+
+            tracker = GetComponent<AutimeciaTracker>();
+            if (tracker)
+                tracker.enabled = true;
 
             durationMax = chargeMax / attackSpeedStat;
             durationMin = chargeMin / attackSpeedStat;
@@ -43,6 +50,8 @@ namespace Autimecia.SkillStates
         public override void OnExit()
         {
             base.OnExit();
+            if(tracker)
+                tracker.enabled = false;
             animator.SetBool("attacking", false);
         }
 
@@ -52,8 +61,16 @@ namespace Autimecia.SkillStates
 
             if (isAuthority && ((!IsKeyDownAuthority() && fixedAge >= durationMin) || fixedAge >= durationMax))
             {
-                var nextState = new FaustFire();
-                this.outer.SetNextState(nextState);
+                var target = tracker.GetTrackingTarget();
+                if (target)
+                {
+                    outer.SetNextState(new FaustFire());
+                }
+                else
+                {
+                    PlayCrossfade("FullBody, Override", "BufferEmpty", 0.1f);
+                    outer.SetNextStateToMain();
+                }
             }
         }
     }

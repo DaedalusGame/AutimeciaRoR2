@@ -104,7 +104,7 @@ namespace Autimecia.Utils
         }
     }
 
-    class ReelBoardComponent : MonoBehaviour
+    abstract class ReelBoardComponent : MonoBehaviour
     {
         float stopwatch;
         public float startTime;
@@ -112,7 +112,7 @@ namespace Autimecia.Utils
         public float selectTime = float.PositiveInfinity;
         public AnimationCurve startCurve = AnimationCurve.Constant(0, float.PositiveInfinity, 0);
         public AnimationCurve endCurve = AnimationCurve.Constant(0, float.PositiveInfinity, 1);
-        public object value;
+        public abstract object value { get; }
 
         SpriteRenderer spriteRenderer;
         SpriteRenderer cursorRenderer;

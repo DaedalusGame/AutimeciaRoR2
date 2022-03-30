@@ -28,7 +28,8 @@ namespace Autimecia.Modules
             LanguageAPI.Add(prefix + "OUTRO_FLAVOR", outro);
             LanguageAPI.Add(prefix + "OUTRO_FAILURE", outroFailure);
 
-            
+            LanguageAPI.Add("BROTHER_AUTIMECIA_FAUST", "Autimecia, you contemptuous witch, rid me of this foul drip this instant.");
+            LanguageAPI.Add("BROTHERHURT_AUTIMECIA_FAUST", "AUTIMECIA, YOU CONTEMPTUOUS WITCH, RID ME OF THIS FOUL DRIP THIS INSTANT.");
 
             #region Skins
             LanguageAPI.Add(prefix + "DEFAULT_SKIN_NAME", "Default");
@@ -42,12 +43,12 @@ namespace Autimecia.Modules
 
             #region Primary
             LanguageAPI.Add(prefix + "PRIMARY_FEDORA_BEAM_NAME", "Fedora Beam");
-            LanguageAPI.Add(prefix + "PRIMARY_FEDORA_BEAM_DESCRIPTION", Helpers.agilePrefix + $"Throw a fedora forward that fires a beam for <style=cIsDamage>600% damage</style>.");
+            LanguageAPI.Add(prefix + "PRIMARY_FEDORA_BEAM_DESCRIPTION", Helpers.agilePrefix + $"Throw a fedora forward that fires a beam for <style=cIsDamage>{100f * StaticValues.hatBeamDamageInitial}% damage</style>. Successive hits deal only <style=cIsDamage>{100f * StaticValues.hatBeamDamageInitial * StaticValues.hatBeamDamageDiminish}% damage</style>.");
             #endregion
 
             #region Secondary
             LanguageAPI.Add(prefix + "SECONDARY_FAUST_NAME", "Faustian Bargain");
-            LanguageAPI.Add(prefix + "SECONDARY_FAUST_DESCRIPTION", Helpers.agilePrefix + $"Launch a fedora at one enemy for <style=cIsDamage>{100f * StaticValues.gunDamageCoefficient}% damage</style>. The fedora attaches to the target and you receive 1% of the enemy's money and experience each hit. Additionally, one random skill of the target is disabled while the fedora is attached.");
+            LanguageAPI.Add(prefix + "SECONDARY_FAUST_DESCRIPTION", Helpers.agilePrefix + $"Launch a fedora at one enemy for <style=cIsDamage>{100f * StaticValues.faustDamage}% damage</style>. The fedora attaches to the target and you receive <style=cIsUtility>{100f * StaticValues.faustRewardPerHit}%</style> of the enemy's money and experience each hit. Additionally, one random skill of the target is disabled while the fedora is attached.");
             #endregion
 
             #region Utility
@@ -57,7 +58,7 @@ namespace Autimecia.Modules
 
             #region Special
             LanguageAPI.Add(prefix + "SPECIAL_CHAOS_NAME", "Chaos");
-            LanguageAPI.Add(prefix + "SPECIAL_CHAOS_DESCRIPTION", $"Throw a bomb for <style=cIsDamage>{100f * StaticValues.bombDamageCoefficient}% damage</style>.");
+            LanguageAPI.Add(prefix + "SPECIAL_CHAOS_DESCRIPTION", Helpers.chaoticPrefix + $"Use a random elemental ability. Effects do not stack.");
             #endregion
 
             #region Achievements

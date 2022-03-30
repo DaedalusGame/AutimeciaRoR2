@@ -57,7 +57,7 @@ namespace Autimecia.SkillStates
                 FireProjectileInfo fireProjectileInfo = new FireProjectileInfo
                 {
                     crit = RollCrit(),
-                    damage = damageStat * 6.0f,
+                    damage = damageStat * StaticValues.hatBeamDamageInitial,
                     damageColorIndex = DamageColorIndex.Default,
                     force = 0f,
                     owner = gameObject,

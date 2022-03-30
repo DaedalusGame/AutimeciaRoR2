@@ -1,14 +1,33 @@
 ﻿using System;
 using Autimecia.Modules.ProjectileComponents;
+using Autimecia.SkillStates;
 using Autimecia.Utils;
 using R2API;
 using RoR2;
+using RoR2.Orbs;
 using RoR2.Projectile;
+using ThreeEyedGames;
 using UnityEngine;
 using UnityEngine.Networking;
 
 namespace Autimecia.Modules
 {
+    enum ChaosElement
+    {
+        Fire,
+        Water,
+        Wind,
+        Earth,
+    }
+
+    enum ChaosTarget
+    {
+        Projectile,
+        Shield,
+        Buff,
+        Area,
+    }
+
     internal static class Projectiles
     {
         internal static GameObject fedoraBeamPrefab;
@@ -18,18 +37,29 @@ namespace Autimecia.Modules
         internal static GameObject chaosFireball;
         internal static GameObject chaosWind;
         internal static GameObject chaosBubble;
+        internal static GameObject chaosEarthWave;
+        internal static GameObject chaosFireField;
 
         internal static GameObject effectSplash;
         internal static GameObject effectWaterExplosion;
         internal static GameObject effectWindArea;
+        internal static GameObject effectEarthquake;
+        internal static GameObject effectFireExplosion;
 
+        internal static GameObject shieldFire;
+        internal static GameObject shieldWind;
         internal static GameObject shieldWater;
+
+        internal static GameObject orbFaust;
+        internal static GameObject orbIcicle;
 
         internal static void RegisterProjectiles()
         {
             effectSplash = CreateSplashEffect();
             effectWaterExplosion = CreateWaterExplosionEffect();
             effectWindArea = CreateWindBlast();
+            effectEarthquake = CreateChaosEarthExplosion();
+            effectFireExplosion = CreateFireExplosionEffect();
 
             // only separating into separate methods for my sanity
             CreateBomb();
@@ -39,8 +69,15 @@ namespace Autimecia.Modules
             chaosFireball = CreateChaosFireball();
             chaosWind = CreateChaosWind();
             chaosBubble = CreateChaosBubble();
+            chaosEarthWave = CreateChaosEarth();
+            chaosFireField = CreateChaosFireField();
 
+            shieldFire = CreateFireShield();
+            shieldWind = CreateWindShield();
             shieldWater = CreateBubbleShield();
+
+            orbFaust = CreateFaustOrb();
+            orbIcicle = CreateIceSpikeOrb();
 
             AddProjectile(bombPrefab);
             AddProjectile(fedoraBeamPrefab);
@@ -73,13 +110,63 @@ namespace Autimecia.Modules
             return shield;
         }
 
+        private static GameObject CreateWindShield()
+        {
+            GameObject shieldOrb = PrefabAPI.InstantiateClone(Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("Shield"), "WindShieldOrb", false);
+            var shieldPart = shieldOrb.AddComponent<ShieldPart>();
+            shieldPart.popPrefab = null;
+            var locator = shieldOrb.GetComponent<ChildLocator>();
+            locator.FindChildGameObject("Hitbox").AddComponent<HitBox>();
+
+            var whirlwind = AddWhirlwind("Whirlwind", shieldOrb);
+            whirlwind.transform.localScale = Vector3.one * 0.4f;
+
+            GameObject shield = PrefabAPI.InstantiateClone(Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("Null"), "WindShield", false);
+            var networkId = shield.AddComponent<NetworkIdentity>();
+            var shieldController = shield.AddComponent<ShieldChaos>();
+            shieldController.shieldOrbPrefab = shieldOrb;
+            shieldController.lifetime = 30f;
+            shieldController.resetInterval = 0.10f;
+            var hitboxGroup = shield.AddComponent<HitBoxGroup>();
+
+            PrefabAPI.RegisterNetworkPrefab(shield);
+
+            return shield;
+        }
+
+        private static GameObject CreateFireShield()
+        {
+            GameObject shieldOrb = PrefabAPI.InstantiateClone(Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("Shield"), "FireShieldOrb", false);
+            var shieldPart = shieldOrb.AddComponent<ShieldPart>();
+            shieldPart.popPrefab = null;
+            var locator = shieldOrb.GetComponent<ChildLocator>();
+            locator.FindChildGameObject("Hitbox").AddComponent<HitBox>();
+
+            var whirlwind = AddFireball("Fireball", shieldOrb);
+            whirlwind.transform.localScale = Vector3.one * 0.7f;
+
+            GameObject shield = PrefabAPI.InstantiateClone(Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("Null"), "FireShield", false);
+            var networkId = shield.AddComponent<NetworkIdentity>();
+            var shieldController = shield.AddComponent<ShieldChaos>();
+            shieldController.damageType = DamageType.IgniteOnHit;
+            shieldController.procChance = 0.6f;
+            shieldController.shieldOrbPrefab = shieldOrb;
+            shieldController.lifetime = 30f;
+            shieldController.resetInterval = 0.10f;
+            var hitboxGroup = shield.AddComponent<HitBoxGroup>();
+
+            PrefabAPI.RegisterNetworkPrefab(shield);
+
+            return shield;
+        }
+
         private static GameObject CreateWindBlast()
         {
             GameObject newPrefab = PrefabAPI.InstantiateClone(Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlWindArea"), "WindArea");
 
             var vfxAttributes = newPrefab.AddComponent<VFXAttributes>();
             vfxAttributes.vfxPriority = VFXAttributes.VFXPriority.Always;
-            vfxAttributes.vfxIntensity = VFXAttributes.VFXIntensity.High;
+            vfxAttributes.vfxIntensity = VFXAttributes.VFXIntensity.Low;
 
             var effectComponent = newPrefab.AddComponent<EffectComponent>();
             effectComponent.applyScale = true;
@@ -121,6 +208,25 @@ namespace Autimecia.Modules
             return newPrefab;
         }
 
+        private static GameObject CreateFireExplosionEffect()
+        {
+            GameObject newPrefab = PrefabAPI.InstantiateClone(Resources.Load<GameObject>("Prefabs/Effects/WilloWispExplosion"), "FireExplosion");
+
+            newPrefab.transform.localPosition = Vector3.zero;
+            GameObject.Destroy(newPrefab.transform.Find("Flames, Radial").gameObject);
+
+            var particles = newPrefab.GetComponentsInChildren<ParticleSystem>();
+            foreach(var particleSystem in particles)
+            {
+                var main = particleSystem.main;
+                main.scalingMode = ParticleSystemScalingMode.Hierarchy;
+            }
+
+            EffectAPI.AddEffect(newPrefab);
+
+            return newPrefab;
+        }
+
         private static GameObject CreateChaosWind()
         {
             var wind = CreateWaveBeam("ChaosWind");
@@ -151,7 +257,10 @@ namespace Autimecia.Modules
         private static GameObject CreateChaosBubble()
         {
             var bubble = CreateBouncer("ChaosBubble");
+            var projectileController = bubble.GetComponent<ProjectileController>();
             var ghost = bubble.GetComponent<ProjectileController>().ghostPrefab;
+
+            projectileController.allowPrediction = false;
 
             var follower = AddBubble("Bubble", ghost);
             follower.transform.localScale = 2f * Vector3.one;
@@ -159,7 +268,7 @@ namespace Autimecia.Modules
             PrefabAPI.RegisterNetworkPrefab(bubble);
             ProjectileAPI.Add(bubble);
 
-            SetLocalPlayerAuthority(bubble);
+            //SetLocalPlayerAuthority(bubble);
 
             return bubble;
         }
@@ -178,6 +287,90 @@ namespace Autimecia.Modules
             vfx.transform.SetParent(parent.transform);
 
             return vfx;
+        }
+
+        private static GameObject AddFireball(string name, GameObject parent)
+        {
+            var vfx = PrefabAPI.InstantiateClone(Resources.Load<GameObject>("Prefabs/ProjectileGhosts/MegaFireballGhost"), name, false);
+
+            vfx.transform.localPosition = Vector3.zero;
+            GameObject.Destroy(vfx.GetComponent<ProjectileGhostController>());
+            GameObject.Destroy(vfx.GetComponent<VFXAttributes>());
+            vfx.transform.SetParent(parent.transform);
+
+            return vfx;
+        }
+
+        private static GameObject CreateChaosFireField()
+        {
+            GameObject newPrefab = PrefabAPI.InstantiateClone(Resources.Load<GameObject>("Prefabs/Projectiles/LunarExploderProjectileDotZone"), "ChaosFireArea");
+
+            var decal = newPrefab.transform.Find("FX/ScaledOnImpact/Decal");
+            var spores = newPrefab.transform.Find("FX/ScaledOnImpact/Spores");
+            var fireBillboard = newPrefab.transform.Find("FX/ScaledOnImpact/Fire, Billboard");
+            var fireStretched = newPrefab.transform.Find("FX/ScaledOnImpact/Fire, Stretched");
+            var pointLight = newPrefab.transform.Find("FX/Point Light");
+            GameObject.Destroy(newPrefab.transform.Find("FX/ScaledOnImpact/TeamAreaIndicator, GroundOnly").gameObject);
+
+            AutimeciaPlugin.ModLogger.LogInfo(decal);
+            AutimeciaPlugin.ModLogger.LogInfo(spores);
+            AutimeciaPlugin.ModLogger.LogInfo(fireBillboard);
+            AutimeciaPlugin.ModLogger.LogInfo(fireStretched);
+            AutimeciaPlugin.ModLogger.LogInfo(pointLight);
+
+            var decalComponent = decal.GetComponent<Decal>();
+
+            var decalMaterial = decalComponent.Material = new Material(decalComponent.Material);
+            AutimeciaPlugin.ModLogger.LogInfo(decalMaterial);
+            var sporeMaterial = spores.GetComponent<ParticleSystemRenderer>().material;
+            AutimeciaPlugin.ModLogger.LogInfo(sporeMaterial);
+            var fireBillboardMaterial = fireBillboard.GetComponent<ParticleSystemRenderer>().material;
+            AutimeciaPlugin.ModLogger.LogInfo(fireBillboardMaterial);
+            var fireStretchedMaterial = fireStretched.GetComponent<ParticleSystemRenderer>().material;
+            AutimeciaPlugin.ModLogger.LogInfo(fireStretchedMaterial);
+
+            decalMaterial.SetColor("_Color", new Color(32f * 0.5f, 13.67843f * 0.5f, 3.913726f * 0.5f, 1f));
+            decalMaterial.SetTexture("_RemapTex", Modules.Assets.mainAssetBundle.LoadAsset<Texture>("fire_ramp"));
+            fireBillboardMaterial.SetTexture("_RemapTex", Modules.Assets.mainAssetBundle.LoadAsset<Texture>("fire_ramp"));
+            fireStretchedMaterial.SetTexture("_RemapTex", Modules.Assets.mainAssetBundle.LoadAsset<Texture>("fire_ramp"));
+            sporeMaterial.SetTexture("_RemapTex", Modules.Assets.mainAssetBundle.LoadAsset<Texture>("flare_ramp"));
+
+            var light = pointLight.GetComponent<Light>();
+            AutimeciaPlugin.ModLogger.LogInfo(light);
+            light.color = new Color(1f, 0.3802547f, 0f, 1f);
+
+            PrefabAPI.RegisterNetworkPrefab(newPrefab);
+            ProjectileAPI.Add(newPrefab);
+
+            return newPrefab;
+        }
+
+        private static GameObject CreateChaosEarth()
+        {
+            GameObject newPrefab = PrefabAPI.InstantiateClone(Resources.Load<GameObject>("Prefabs/Projectiles/Sunder"), "ChaosEarthArea");
+
+            GameObject.Destroy(newPrefab.GetComponent<ProjectileOverlapAttack>());
+
+            var earthquakeTrail = newPrefab.AddComponent<ProjectileEarthquakeTrail>();
+            earthquakeTrail.prefab = Projectiles.effectEarthquake;
+            earthquakeTrail.damageMultiplier = 20f;
+            earthquakeTrail.radius = 5f;
+            earthquakeTrail.force = 2000f;
+            earthquakeTrail.fireRate = 0.3f;
+
+            PrefabAPI.RegisterNetworkPrefab(newPrefab);
+            ProjectileAPI.Add(newPrefab);
+
+            return newPrefab;
+        }
+
+        private static GameObject CreateChaosEarthExplosion()
+        {
+            GameObject newPrefab = PrefabAPI.InstantiateClone(Resources.Load<GameObject>("Prefabs/Effects/ImpactEffects/BeetleGuardGroundSlam"), "ChaosEarthAreaExplosion");
+
+            EffectAPI.AddEffect(newPrefab);
+
+            return newPrefab;
         }
 
         private static GameObject CreateWaveBeam(string name)
@@ -274,52 +467,134 @@ namespace Autimecia.Modules
             return fireball;
         }
 
+        private static GameObject CreateIceSpikeOrb()
+        {
+            var orb = PrefabAPI.InstantiateClone(Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("IceSpikeOrb"), "IceSpikeOrb", false);
+
+            var orbEffect = orb.AddComponent<OrbEffect>();
+            orbEffect.startVelocity1 = new Vector3(-2, -2, -2);
+            orbEffect.startVelocity2 = new Vector3(2, 2, 2);
+            orbEffect.endVelocity1 = new Vector3(-2, -2, -2);
+            orbEffect.endVelocity2 = new Vector3(2, 2, 2);
+            orbEffect.movementCurve = AnimationCurve.Linear(0, 0, 1, 1);
+            orbEffect.faceMovement = false;
+
+            var icicleEffect = orb.AddComponent<IcicleEffect>();
+
+            var effectComponent = orb.AddComponent<EffectComponent>();
+
+            var vfxAttributes = orb.AddComponent<VFXAttributes>();
+            vfxAttributes.vfxIntensity = RoR2.VFXAttributes.VFXIntensity.Low;
+            vfxAttributes.vfxPriority = RoR2.VFXAttributes.VFXPriority.Medium;
+
+            PrefabAPI.RegisterNetworkPrefab(orb);
+            EffectAPI.AddEffect(orb);
+            OrbAPI.AddOrb(typeof(OrbIcicle));
+
+            return orb;
+        }
+
+        private static GameObject CreateFaustOrb()
+        {
+            var orb = PrefabAPI.InstantiateClone(Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("HatOrb"), "FaustOrb", false);
+
+            var fedoraLocator = orb.GetComponent<ChildLocator>();
+            fedoraLocator.FindChild("ScaleTransform").localScale = new Vector3(3, 3, 3);
+
+            var orbEffect = orb.AddComponent<OrbEffect>();
+            orbEffect.startVelocity1 = new Vector3(-12, 0, 8);
+            orbEffect.startVelocity2 = new Vector3(12, 0, 16);
+            orbEffect.endVelocity1 = new Vector3(0, 12, 0);
+            orbEffect.endVelocity2 = new Vector3(0, 12, 0);
+            orbEffect.movementCurve = AnimationCurve.Linear(0, 0, 1, 1);
+            orbEffect.faceMovement = true;
+
+            var detachParticles = orb.AddComponent<DetachParticleOnDestroyAndEndEmission>();
+            detachParticles.particleSystem = orb.GetComponentInChildren<ParticleSystem>();
+
+            var effectComponent = orb.AddComponent<EffectComponent>();
+
+            var vfxAttributes = orb.AddComponent<VFXAttributes>();
+            vfxAttributes.vfxIntensity = RoR2.VFXAttributes.VFXIntensity.Low;
+            vfxAttributes.vfxPriority = RoR2.VFXAttributes.VFXPriority.Medium;
+
+            PrefabAPI.RegisterNetworkPrefab(orb);
+            EffectAPI.AddEffect(orb);
+            OrbAPI.AddOrb(typeof(OrbFaust));
+
+            return orb;
+        }
+
         private static GameObject CreateFedoraBeam()
         {
             var beam = PrefabAPI.InstantiateClone(Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlBeam"), "Beam", false);
             var fedora = CreateFedora("ProjFedoraBeam");
 
-            beam.transform.SetParent(fedora.transform);
+            var entityStateMachine = fedora.AddComponent<EntityStateMachine>();
+            entityStateMachine.customName = "Body";
+            entityStateMachine.initialStateType.stateType = typeof(HatBeamThrow);
+            entityStateMachine.mainStateType.stateType = typeof(HatDisappear);
+
+            var networkStateMachine = fedora.AddComponent<NetworkStateMachine>();
+            networkStateMachine.stateMachines = new[] { entityStateMachine };
+
+            var projectileController = fedora.GetComponent<ProjectileController>();
+            projectileController.allowPrediction = false;
+
+            beam.transform.SetParent(projectileController.ghostPrefab.transform);
             beam.transform.localPosition += Vector3.forward;
-           
-            var beamSimple = beam.AddComponent<BeamSimple>();
-            beamSimple.projectileController = fedora.GetComponent<ProjectileController>();
-            beamSimple.projectileDamage = fedora.GetComponent<ProjectileDamage>();
-            beamSimple.multiHitDelay = 0.1f;
-            beamSimple.multiHitMultiplier = 0.1f;
-            beamSimple.maxDistance = 100;
-            beamSimple.radius = 0.5f;
 
             var beamLocator = beam.GetComponent<ChildLocator>();
             var beamRainbow = beamLocator.FindChildGameObject("Outer").AddComponent<RainbowComponent>();
             beamRainbow.changeEmission = true;
 
-            var fedoraLocator = fedora.GetComponent<ChildLocator>();
-            fedoraLocator.FindChild("ScaleTransform").localScale = new Vector3(3, 3, 3);
-            var fedoraRainbow = fedoraLocator.FindChildGameObject("Hat").AddComponent<RainbowComponent>();
-            fedoraRainbow.changeTexture = true;
-            fedoraRainbow.changeEmission = true;
+            projectileController.ghostPrefab.GetComponent<ChildLocator>().FindChild("ScaleTransform").localScale = new Vector3(3, 3, 3);
+
+            MakeFedoraBig(projectileController.ghostPrefab, 3);
+            MakeFedoraDullRainbow(projectileController.ghostPrefab, 1f);
             var rb = fedora.GetComponent<Rigidbody>();
             rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
             var projectileFedoraLaser = fedora.AddComponent<ProjectileFedoraLaser>();
-            projectileFedoraLaser.lifetime = 3;
-            projectileFedoraLaser.firetime = 0.40f;
-            projectileFedoraLaser.movetime = 0.20f;
             projectileFedoraLaser.distance = 7;
             projectileFedoraLaser.moveCurve = AnimationCurve.EaseInOut(0, 0, 0.15f, 1);
             PrefabAPI.RegisterNetworkPrefab(fedora);
             ProjectileAPI.Add(fedora);
 
+            SetLocalPlayerAuthority(fedora);
+
             return fedora;
+        }
+
+        public static void MakeFedoraBig(GameObject fedora, float scale)
+        {
+            var fedoraLocator = fedora.GetComponent<ChildLocator>();
+            fedoraLocator.FindChild("ScaleTransform").localScale = Vector3.one * scale;
+        }
+
+        public static void MakeFedoraRainbow(GameObject fedora, float hueRate)
+        {
+            var fedoraLocator = fedora.GetComponent<ChildLocator>();
+            var fedoraRainbow = fedoraLocator.FindChildGameObject("Hat").AddComponent<RainbowComponent>();
+            fedoraRainbow.changeTexture = true;
+            fedoraRainbow.changeEmission = true;
+            fedoraRainbow.hueRate = hueRate;
+        }
+
+        public static void MakeFedoraDullRainbow(GameObject fedora, float hueRate)
+        {
+            var fedoraLocator = fedora.GetComponent<ChildLocator>();
+            var fedoraRainbow = fedoraLocator.FindChildGameObject("Hat").AddComponent<RainbowComponent>();
+            fedoraRainbow.changeTexture = true;
+            fedoraRainbow.hueRate = hueRate;
         }
 
         private static GameObject CreateTargetReel()
         {
             var reel = CreateReel("ReelTarget");
-            var reelFire = AddReelBoard(reel, "ReelBoardProjectile", "chaos_projectile", 10);
-            var reelWater = AddReelBoard(reel, "ReelBoardShield", "chaos_shield", AnimationBlendMode.Additive);
-            var reelWind = AddReelBoard(reel, "ReelBoardBuff", "chaos_buff", new object());
-            var reelEarth = AddReelBoard(reel, "ReelBoardArea", "chaos_area", new object());
+            var reelFire = AddReelBoardTarget(reel, "ReelBoardProjectile", "chaos_projectile", ChaosTarget.Projectile);
+            var reelWater = AddReelBoardTarget(reel, "ReelBoardShield", "chaos_shield", ChaosTarget.Shield);
+            var reelWind = AddReelBoardTarget(reel, "ReelBoardBuff", "chaos_buff", ChaosTarget.Buff);
+            var reelEarth = AddReelBoardTarget(reel, "ReelBoardArea", "chaos_area", ChaosTarget.Area);
 
             return reel;
         }
@@ -327,17 +602,17 @@ namespace Autimecia.Modules
         private static GameObject CreateElementReel()
         {
             var reel = CreateReel("ReelElement");
-            var reelFire = AddReelBoard(reel, "ReelBoardFire", "chaos_fire", 10);
-            var reelWater = AddReelBoard(reel, "ReelBoardWater", "chaos_water", AnimationBlendMode.Additive);
-            var reelWind = AddReelBoard(reel, "ReelBoardWind", "chaos_wind", new object());
-            var reelEarth = AddReelBoard(reel, "ReelBoardEarth", "chaos_earth", new object());
+            var reelFire = AddReelBoardElement(reel, "ReelBoardFire", "chaos_fire", ChaosElement.Fire);
+            var reelWater = AddReelBoardElement(reel, "ReelBoardWater", "chaos_water", ChaosElement.Water);
+            var reelWind = AddReelBoardElement(reel, "ReelBoardWind", "chaos_wind", ChaosElement.Wind);
+            var reelEarth = AddReelBoardElement(reel, "ReelBoardEarth", "chaos_earth", ChaosElement.Earth);
 
             return reel;
         }
 
         private static GameObject CreateFedora(string name)
         {
-            GameObject newPrefab = PrefabAPI.InstantiateClone(Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlTrilby"), name);
+            GameObject newPrefab = PrefabAPI.InstantiateClone(Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("HatBullet"), name);
 
             
             var teamFilter = newPrefab.AddComponent<TeamFilter>();
@@ -346,10 +621,11 @@ namespace Autimecia.Modules
             var projectileNetTransform = newPrefab.AddComponent<ProjectileNetworkTransform>();
             //var networkIdentity = newPrefab.AddComponent<NetworkIdentity>();
             //var ghostManager = newPrefab.AddComponent<ProjectileGhostController>();
+            var modelLocator = newPrefab.AddComponent<ModelLocator>();
 
             newPrefab.AddComponent<DebugLifetimeComponent>();
 
-            projectileController.ghostPrefab = InitGhostPrefab(Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlTrilbyGhost"), name);
+            projectileController.ghostPrefab = InitGhostPrefab(Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlTrilby"), name);
 
             return newPrefab;
         }
@@ -362,16 +638,45 @@ namespace Autimecia.Modules
             return newPrefab;
         }
 
-        private static GameObject AddReelBoard(GameObject reel, string name, string spritePath, object value)
+        class ReelBoardElement : ReelBoardComponent
+        {
+            public ChaosElement element;
+
+            public override object value => element;
+        }
+
+        class ReelBoardTarget : ReelBoardComponent
+        {
+            public ChaosTarget target;
+
+            public override object value => target;
+        }
+
+        private static GameObject AddReelBoardElement(GameObject reel, string name, string spritePath, ChaosElement element)
+        {
+            var newPrefab = AddReelBoard(reel, name, spritePath);
+            var board = newPrefab.AddComponent<ReelBoardElement>();
+            board.element = element;
+
+            return newPrefab;
+        }
+
+        private static GameObject AddReelBoardTarget(GameObject reel, string name, string spritePath, ChaosTarget target)
+        {
+            var newPrefab = AddReelBoard(reel, name, spritePath);
+            var board = newPrefab.AddComponent<ReelBoardTarget>();
+            board.target = target;
+
+            return newPrefab;
+        }
+
+        private static GameObject AddReelBoard(GameObject reel, string name, string spritePath)
         {
             GameObject newPrefab = PrefabAPI.InstantiateClone(Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("ReelBoard"), name, false);
             Sprite sprite = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>(spritePath);
 
             newPrefab.transform.SetParent(reel.transform);
             var locator = newPrefab.GetComponent<ChildLocator>();
-
-            var board = newPrefab.AddComponent<ReelBoardComponent>();
-            board.value = value;
 
             var billboardBase = locator.FindChildGameObject("Billboard");
             var billboard = billboardBase.AddComponent<Billboard>();

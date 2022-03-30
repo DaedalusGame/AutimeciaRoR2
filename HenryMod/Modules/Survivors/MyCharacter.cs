@@ -100,7 +100,7 @@ namespace Autimecia.Modules.Survivors
             #endregion
 
             #region Secondary
-            SkillDef shootSkillDef = Modules.Skills.CreateSkillDef(new SkillDefInfo
+            SkillDef shootSkillDef = Modules.Skills.CreateSkillDef<SkillDef>(new SkillDefInfo
             {
                 skillName = prefix + "_HENRY_BODY_SECONDARY_GUN_NAME",
                 skillNameToken = prefix + "_HENRY_BODY_SECONDARY_GUN_NAME",
@@ -129,7 +129,7 @@ namespace Autimecia.Modules.Survivors
             #endregion
 
             #region Utility
-            SkillDef rollSkillDef = Modules.Skills.CreateSkillDef(new SkillDefInfo
+            SkillDef rollSkillDef = Modules.Skills.CreateSkillDef<SkillDef>(new SkillDefInfo
             {
                 skillName = prefix + "_HENRY_BODY_UTILITY_ROLL_NAME",
                 skillNameToken = prefix + "_HENRY_BODY_UTILITY_ROLL_NAME",
@@ -157,7 +157,7 @@ namespace Autimecia.Modules.Survivors
             #endregion
 
             #region Special
-            SkillDef bombSkillDef = Modules.Skills.CreateSkillDef(new SkillDefInfo
+            SkillDef bombSkillDef = Modules.Skills.CreateSkillDef<SkillDef>(new SkillDefInfo
             {
                 skillName = prefix + "_HENRY_BODY_SPECIAL_BOMB_NAME",
                 skillNameToken = prefix + "_HENRY_BODY_SPECIAL_BOMB_NAME",

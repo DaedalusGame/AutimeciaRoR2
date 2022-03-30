@@ -71,6 +71,10 @@ namespace Autimecia.Utils
         HitBoxGroup hitboxGroup;
         OverlapAttack attack;
 
+        public float damageMultiplier = 1f;
+        public DamageType damageType = DamageType.Generic;
+        public float procChance = 0.1f;
+
         float resetTime;
         public float resetInterval = 0.5f;
 
@@ -189,16 +193,16 @@ namespace Autimecia.Utils
         {
             attack = new OverlapAttack();
             attack.procChainMask = default(ProcChainMask);
-            attack.procCoefficient = 0.1f;
+            attack.procCoefficient = procChance;
             attack.attacker = owner;
             attack.inflictor = gameObject;
             attack.teamIndex = cachedOwnerInfo.characterBody.teamComponent.teamIndex;
-            attack.damage = cachedOwnerInfo.characterBody.damage * 2f;
+            attack.damage = cachedOwnerInfo.characterBody.damage * damageMultiplier;
             attack.forceVector = Vector3.zero;
             attack.hitEffectPrefab = null;
             attack.isCrit = false;
             attack.damageColorIndex = DamageColorIndex.Default;
-            attack.damageType = DamageType.Generic;
+            attack.damageType = damageType;
             attack.maximumOverlapTargets = 1000;
             attack.hitBoxGroup = hitboxGroup;
             attack.Fire(new List<HurtBox>());

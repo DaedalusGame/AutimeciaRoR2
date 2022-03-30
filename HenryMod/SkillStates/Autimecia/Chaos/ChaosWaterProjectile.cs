@@ -39,14 +39,6 @@ namespace Autimecia.SkillStates
             characterBody.outOfCombatStopwatch = 0f;
             animator.SetBool("attacking", true);
 
-            EffectManager.SpawnEffect(Projectiles.effectWindArea, new EffectData() {
-                origin = characterBody.corePosition,
-            }, true);
-
-            GameObject shield = UnityEngine.Object.Instantiate(Projectiles.shieldWater, transform);
-            var shieldController = shield.GetComponent<ShieldController>();
-            shieldController.networkOwner = gameObject;
-
             PlayCrossfade("FullBody, Override", "ChaosCast2", "Chaos.playbackRate", durationAnim, 0.05f);
         }
 
@@ -73,7 +65,8 @@ namespace Autimecia.SkillStates
                 foreach(var projectileController in ProjectileSalvoHelper.EndSalvo())
                 {
                     var projectileIgnoreSalvo = projectileController.GetComponent<ProjectileIgnoreSalvo>();
-                    projectileIgnoreSalvo.salvoColliders = salvoColliders;
+                    if(projectileIgnoreSalvo)
+                        projectileIgnoreSalvo.salvoColliders = salvoColliders;
                 }
                 fired = true;
             }
@@ -90,11 +83,6 @@ namespace Autimecia.SkillStates
             {
                 ProjectileManager.instance.FireProjectile(Projectiles.chaosBubble, aimRay.origin, Util.QuaternionSafeLookRotation(aimRay.direction), base.gameObject, this.damageStat * damageCoefficient, force, Util.CheckRoll(this.critStat, base.characterBody.master), DamageColorIndex.Default, null, -1f);
             }
-        }
-
-        private void SetNoCollide(GameObject a, GameObject b)
-        {
-            var colliders = a.GetComponentsInChildren<Collider>();
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()

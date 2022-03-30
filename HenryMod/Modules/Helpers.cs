@@ -6,6 +6,7 @@ namespace Autimecia.Modules
     internal static class Helpers
     {
         internal const string agilePrefix = "<style=cIsUtility>Agile.</style> ";
+        internal const string chaoticPrefix = "<style=cIsUtility>Chaotic.</style> ";
 
         internal static string ScepterDescription(string desc)
         {

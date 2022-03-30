@@ -8,6 +8,7 @@ using System.Security.Permissions;
 using System.Threading;
 using System.Globalization;
 using Autimecia.Utils;
+using R2API;
 
 [module: UnverifiableCode]
 #pragma warning disable CS0618 // Type or member is obsolete
@@ -22,10 +23,12 @@ namespace Autimecia
     [R2APISubmoduleDependency(new string[]
     {
         "PrefabAPI",
+        "ItemAPI",
         "EffectAPI",
         "ProjectileAPI",
         "LanguageAPI",
         "SoundAPI",
+        "RecalculateStatsAPI",
     })]
 
     public class AutimeciaPlugin : BaseUnityPlugin
@@ -54,6 +57,7 @@ namespace Autimecia
             // load assets and read config
             Modules.Assets.Initialize();
             Modules.Config.ReadConfig();
+            Modules.Items.Initialize();
             Modules.States.RegisterStates(); // register states for networking
             Modules.Buffs.RegisterBuffs(); // add and register custom buffs/debuffs
             Modules.Projectiles.RegisterProjectiles(); // add and register custom projectiles
@@ -80,12 +84,33 @@ namespace Autimecia
         private void Hook()
         {
             // run hooks here, disabling one is as simple as commenting out the line
-            On.RoR2.CharacterBody.RecalculateStats += CharacterBody_RecalculateStats;
 
             ProjectileSalvoHelper.Init();
+            RecalculateStatsAPI.GetStatCoefficients += RecalculateStatsAPI_GetStatCoefficients;
         }
 
-        private void CharacterBody_RecalculateStats(On.RoR2.CharacterBody.orig_RecalculateStats orig, CharacterBody self)
+        private void RecalculateStatsAPI_GetStatCoefficients(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
+        {
+            if(sender)
+            {
+                if(sender.HasBuff(Modules.Buffs.earthBuff))
+                {
+                    args.armorAdd += 300f;
+                }
+
+                if (sender.HasBuff(Modules.Buffs.waterBuff))
+                {
+                    args.baseRegenAdd += 15f;
+                }
+
+                if (sender.HasBuff(Modules.Buffs.windBuff))
+                {
+                    args.moveSpeedMultAdd += 1.0f;
+                }
+            }
+        }
+
+        /*private void CharacterBody_RecalculateStats(On.RoR2.CharacterBody.orig_RecalculateStats orig, CharacterBody self)
         {
             orig(self);
 
@@ -97,6 +122,6 @@ namespace Autimecia
                     self.armor += 300f;
                 }
             }
-        }
+        }*/
     }
 }

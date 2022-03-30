@@ -8,12 +8,18 @@ namespace Autimecia.Modules
     {
         // armor buff gained during roll
         internal static BuffDef armorBuff;
+        internal static BuffDef earthBuff;
+        internal static BuffDef windBuff;
+        internal static BuffDef waterBuff;
 
         internal static List<BuffDef> buffDefs = new List<BuffDef>();
 
         internal static void RegisterBuffs()
         {
             armorBuff = AddNewBuff("HenryArmorBuff", Resources.Load<Sprite>("Textures/BuffIcons/texBuffGenericShield"), Color.white, false, false);
+            earthBuff = AddNewBuff("AutimeciaEarthBuff", Assets.mainAssetBundle.LoadAsset<Sprite>("buff_earth"), Color.white, false, false);
+            windBuff = AddNewBuff("AutimeciaWindBuff", Assets.mainAssetBundle.LoadAsset<Sprite>("buff_wind"), new Color32(220, 252, 221, 255), false, false);
+            waterBuff = AddNewBuff("AutimeciaWaterBuff", Assets.mainAssetBundle.LoadAsset<Sprite>("buff_water"), new Color32(40, 164, 238, 255), false, false);
         }
 
         // simple helper method

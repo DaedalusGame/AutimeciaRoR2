@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Autimecia.Utils;
 using BepInEx.Configuration;
 using RoR2;
 using RoR2.Skills;
@@ -85,6 +86,8 @@ namespace Autimecia.Modules.Survivors
 
         internal override UnlockableDef characterUnlockableDef { get; set; }
 
+        public static SkillDef brokenSkillDef;
+
         public Autimecia()
         {
             characterMainState = typeof(AutimeciaCharacterState);
@@ -93,6 +96,14 @@ namespace Autimecia.Modules.Survivors
         internal override void InitializeCharacter()
         {
             base.InitializeCharacter();
+
+            var tracker = bodyPrefab.AddComponent<AutimeciaTracker>();
+            tracker.enabled = false;
+            tracker.maxTrackingDistance = 60f;
+            tracker.maxTrackingAngle = 30f;
+            tracker.trackerUpdateFrequency = 10f;
+
+            var faustController = bodyPrefab.AddComponent<FaustControllerComponent>();
         }
 
         internal override void InitializeDoppelganger()
@@ -114,7 +125,7 @@ namespace Autimecia.Modules.Survivors
 
             SkillDef fedoraBeamSkillDef = Modules.Skills.CreatePrimarySkillDef(new EntityStates.SerializableEntityStateType(typeof(SkillStates.FedoraSpeen)), "Weapon", prefix + "_AUTIMECIA_BODY_PRIMARY_FEDORA_BEAM_NAME", prefix + "_AUTIMECIA_BODY_PRIMARY_FEDORA_BEAM_DESCRIPTION", Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texPrimaryIcon"), true);
 
-            SkillDef faustSkillDef = Modules.Skills.CreateSkillDef(new SkillDefInfo
+            SkillDef faustSkillDef = Modules.Skills.CreateSkillDef<SkillDef>(new SkillDefInfo
             {
                 skillName = prefix + "_AUTIMECIA_BODY_SECONDARY_FAUST_NAME",
                 skillNameToken = prefix + "_AUTIMECIA_BODY_SECONDARY_FAUST_NAME",
@@ -138,7 +149,7 @@ namespace Autimecia.Modules.Survivors
                 stockToConsume = 1,
                 keywordTokens = new string[] { "KEYWORD_AGILE" }
             });
-            SkillDef chaosSkillDef = Modules.Skills.CreateSkillDef(new SkillDefInfo
+            SkillDef chaosSkillDef = Modules.Skills.CreateSkillDef<SkillDef>(new SkillDefInfo
             {
                 skillName = prefix + "_AUTIMECIA_BODY_SPECIAL_CHAOS_NAME",
                 skillNameToken = prefix + "_AUTIMECIA_BODY_SPECIAL_CHAOS_NAME",
@@ -167,6 +178,31 @@ namespace Autimecia.Modules.Survivors
             Modules.Skills.AddSecondarySkills(bodyPrefab, faustSkillDef);
             Modules.Skills.AddUtilitySkill(bodyPrefab, Modules.Skills.CreatePrimarySkillDef(new EntityStates.SerializableEntityStateType(typeof(SkillStates.VoidSkill)), "Weapon", prefix + "_HENRY_BODY_PRIMARY_SLASH_NAME", prefix + "_HENRY_BODY_PRIMARY_SLASH_DESCRIPTION", Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texPrimaryIcon"), true));
             Modules.Skills.AddSpecialSkill(bodyPrefab, chaosSkillDef);
+
+            brokenSkillDef = Modules.Skills.CreateSkillDef<BrokenSkillDef>(new SkillDefInfo
+            {
+                skillName = prefix + "_BROKEN_NAME",
+                skillNameToken = prefix + "_BROKEN_NAME",
+                skillDescriptionToken = prefix + "_BROKEN_DESCRIPTION",
+                skillIcon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texSpecialIcon"),
+                activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.VoidSkill)),
+                activationStateMachineName = "Weapon",
+                baseMaxStock = 1,
+                baseRechargeInterval = 1f,
+                beginSkillCooldownOnSkillEnd = true,
+                canceledFromSprinting = false,
+                forceSprintDuringState = false,
+                fullRestockOnAssign = true,
+                interruptPriority = EntityStates.InterruptPriority.Skill,
+                resetCooldownTimerOnUse = false,
+                isCombatSkill = true,
+                mustKeyPress = true,
+                cancelSprintingOnActivation = false,
+                rechargeStock = 1,
+                requiredStock = 1,
+                stockToConsume = 1,
+                keywordTokens = new string[] {}
+            });
 
             //TODO: skills
         }

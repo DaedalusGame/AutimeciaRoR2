@@ -511,8 +511,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7085832285687791126}
   m_LocalRotation: {x: -0.027879566, y: -0.004818272, z: 0.17023161, w: 0.98499787}
-  m_LocalPosition: {x: 0.0000000046467563, y: 0.32692444, z: 6.3227695e-10}
-  m_LocalScale: {x: 0.9999999, y: 1, z: 1.0000001}
+  m_LocalPosition: {x: 0, y: 0.32692444, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7085832285688013406}
   - {fileID: 7085832285688013316}
@@ -1669,6 +1669,30 @@ MonoBehaviour:
     transform: {fileID: 7085832285688013342}
   - name: Wings
     transform: {fileID: 7085832285688013762}
+  - name: Hips
+    transform: {fileID: 7085832285688013410}
+  - name: Chest
+    transform: {fileID: 7085832285688013396}
+  - name: UpperLegL
+    transform: {fileID: 7085832285688013374}
+  - name: LowerLegL
+    transform: {fileID: 7085832285688013420}
+  - name: UpperLegR
+    transform: {fileID: 7085832285688013372}
+  - name: LowerLegR
+    transform: {fileID: 7085832285688013330}
+  - name: Head
+    transform: {fileID: 7085832285688013436}
+  - name: HatBone
+    transform: {fileID: 7085832285688013434}
+  - name: UpperArmL
+    transform: {fileID: 7085832285688013370}
+  - name: LowerArmL
+    transform: {fileID: 7085832285688013416}
+  - name: UpperArmR
+    transform: {fileID: 7085832285688013368}
+  - name: LowerArmR
+    transform: {fileID: 7085832285688013422}
 --- !u!114 &7448967227311289904
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -138,7 +138,6 @@ namespace Autimecia.Utils
                 }
                 this.hurtBoxesList.Clear();
 
-                AutimeciaPlugin.ModLogger.LogInfo($"{rays.Count} rays");
                 rays.Clear();
             }
         }
@@ -164,6 +163,7 @@ namespace Autimecia.Utils
                 if (lastHit.ContainsKey(healthComponent))
                 {
                     damageInfo.damage *= multiHitMultiplier;
+                    damageInfo.procCoefficient *= multiHitMultiplier;
                     if (stopwatch < lastHit[healthComponent] + multiHitDelay)
                         return;
                 }

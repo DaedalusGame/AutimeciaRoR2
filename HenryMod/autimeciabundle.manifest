@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 3495172419
+CRC: 815279780
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 23656e1deac54f0d04764a0fcbba1dc9
+    Hash: ce7a3337342b7398e1852bab0fdd1716
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 0a5de678f44775c088ed49d66a3c5f8b
+    Hash: 4ff37e6c8e17e6e3dd19c4f9eba52f47
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -40,15 +40,15 @@ ClassTypes:
 - Class: 108
   Script: {instanceID: 0}
 - Class: 114
+  Script: {fileID: 11500000, guid: 2ff1ea4319cde9347b4265ec3aecc1ef, type: 3}
+- Class: 114
   Script: {fileID: 11500000, guid: 9a68da65c907acb4eb4dbcd042f172e7, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 261c50d8a80898e4ebf2e8e415ea6766, type: 3}
 - Class: 114
-  Script: {fileID: 11500000, guid: f6bbea9fa51abaa468cca212f130865f, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: 2ff1ea4319cde9347b4265ec3aecc1ef, type: 3}
-- Class: 114
   Script: {fileID: 11500000, guid: 29f74e6c7bf456c4ca1be4df79101b8a, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: f6bbea9fa51abaa468cca212f130865f, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 - Class: 134
@@ -82,13 +82,16 @@ Assets:
 - Assets/AutimeciaAssets/Textures/texOmniHitspark4Mask.png
 - Assets/AutimeciaAssets/Textures/chaos_shield.png
 - Assets/Shaders/deferred/hgstandard.shader
+- Assets/AutimeciaAssets/Textures/buff_water.png
 - Assets/AutimeciaAssets/WaveBeam.prefab
 - Assets/AutimeciaAssets/Textures/chaos_projectile.png
 - Assets/AutimeciaAssets/Textures/texSmokePuffSpeckledNormal.png
 - Assets/AutimeciaAssets/Animations/DefaultFloat.anim
 - Assets/AutimeciaAssets/Textures/texSmokePuffSpeckledDisplacement.png
 - Assets/Shaders/deferred/hgwavycloth.shader
+- Assets/AutimeciaAssets/Materials/matLightSpear.mat
 - Assets/Shaders/ui/hguicustomblend.shader
+- Assets/AutimeciaAssets/HatBullet.prefab
 - Assets/AutimeciaAssets/Materials/matScarf.mat
 - Assets/AutimeciaAssets/Materials/matHatGrey.mat
 - Assets/Shaders/postprocess/hgscopeshader.shader
@@ -102,14 +105,16 @@ Assets:
 - Assets/AutimeciaAssets/Animations/TrilbySpin.anim
 - Assets/AutimeciaAssets/Textures/texFluidSprayLarge.png
 - Assets/AutimeciaAssets/Textures/texLightning3Mask.png
-- Assets/AutimeciaAssets/mdlTrilbyGhost.prefab
+- Assets/AutimeciaAssets/mdlTrilbyGhostOld.prefab
 - Assets/AutimeciaAssets/mdlTrilby.prefab
+- Assets/AutimeciaAssets/IceSpikeOrb.prefab
 - Assets/AutimeciaAssets/mdlWhirlwind.prefab
 - Assets/AutimeciaAssets/Textures/texCloudOrganic2.png
 - Assets/Shaders/deferred/hgtriplanarterrainblend.shader
 - Assets/AutimeciaAssets/Materials/matHat.mat
 - Assets/AutimeciaAssets/mdlWaterExplosion.prefab
 - Assets/AutimeciaAssets/Textures/autimecia_scarf.png
+- Assets/AutimeciaAssets/Materials/matSoundwave.mat
 - Assets/AutimeciaAssets/Textures/tex_wind.png
 - Assets/AutimeciaAssets/Mesh/donut7Mesh.asset
 - Assets/AutimeciaAssets/Reel.prefab
@@ -117,9 +122,11 @@ Assets:
 - Assets/Shaders/environment/hgwaterfall.shader
 - Assets/AutimeciaAssets/Animations/FloatForward.anim
 - Assets/Shaders/fx/hgintersectioncloudremap.shader
+- Assets/AutimeciaAssets/EarthSpear.prefab
 - Assets/AutimeciaAssets/Textures/texCloudOrganicNormal.png
 - Assets/AutimeciaAssets/Materials/matBeam.mat
 - Assets/Shaders/environment/hgdistantwater.shader
+- Assets/AutimeciaAssets/Animations/animEarthSpear.controller
 - Assets/AutimeciaAssets/mdlWaterSplash.prefab
 - Assets/AutimeciaAssets/Materials/matTornadoDouble.mat
 - Assets/AutimeciaAssets/Textures/texParticleDust1Mask.png
@@ -127,6 +134,8 @@ Assets:
 - Assets/AutimeciaAssets/Textures/trail_remap_water.png
 - Assets/AutimeciaAssets/Materials/matWoundSphericalBackdrop.mat
 - Assets/AutimeciaAssets/Animations/FloatLeft.anim
+- Assets/AutimeciaAssets/Textures/fire_ramp.png
+- Assets/AutimeciaAssets/Textures/flare_ramp.png
 - Assets/AutimeciaAssets/Bouncer.prefab
 - Assets/AutimeciaAssets/mdlWindArea.prefab
 - Assets/AutimeciaAssets/Textures/tex_bubble.png
@@ -139,30 +148,39 @@ Assets:
 - Assets/Shaders/postprocess/hgscreendamage.shader
 - Assets/AutimeciaAssets/Textures/beam_lighter.png
 - Assets/AutimeciaAssets/Textures/texRampCrocoDisease.png
+- Assets/AutimeciaAssets/Animations/EarthSpearForm.anim
 - Assets/AutimeciaAssets/Materials/matBubble.mat
 - Assets/AutimeciaAssets/Textures/texRampGenericFire.png
+- Assets/AutimeciaAssets/HatOrb.prefab
 - Assets/AutimeciaAssets/Textures/texRampHealing.png
 - Assets/AutimeciaAssets/Mesh/donut6Mesh.asset
 - Assets/AutimeciaAssets/Textures/autimecia_hair.png
+- Assets/AutimeciaAssets/Textures/buff_earth.png
 - Assets/Shaders/fx/hgopaquecloudremap.shader
+- Assets/AutimeciaAssets/Textures/texRampTritoneReversed.png
 - Assets/AutimeciaAssets/Materials/matWoundSlashTrail.mat
 - Assets/AutimeciaAssets/Materials/matTreebotSyringeTrailHealing.mat
 - Assets/AutimeciaAssets/mdlAutimecia.prefab
 - Assets/AutimeciaAssets/Textures/water_splash1.png
+- Assets/AutimeciaAssets/FaustDisplay.prefab
 - Assets/AutimeciaAssets/Animations/animTrilby.controller
 - Assets/AutimeciaAssets/mdlBubble.prefab
 - Assets/AutimeciaAssets/Shield.prefab
 - Assets/AutimeciaAssets/Textures/face_test.png
 - Assets/AutimeciaAssets/mdlBeam.prefab
 - Assets/Shaders/fx/hgforwardplanet.shader
+- Assets/AutimeciaAssets/Textures/texSoundWave.png
 - Assets/AutimeciaAssets/Textures/beam_inner.png
 - Assets/AutimeciaAssets/Materials/matWings.mat
+- Assets/AutimeciaAssets/Materials/matMageIceCore.mat
 - Assets/Shaders/fx/hgvertexonly.shader
+- Assets/AutimeciaAssets/Soundwave.prefab
 - Assets/AutimeciaAssets/Textures/water_splash2.png
 - Assets/Shaders/ui/hguiignorez.shader
 - Assets/AutimeciaAssets/Materials/matCrocoGooLarge.mat
 - Assets/AutimeciaAssets/Materials/matBeamStart.mat
 - Assets/AutimeciaAssets/Mesh/donut5Mesh.asset
+- Assets/AutimeciaAssets/Materials/matTestHat.mat
 - Assets/AutimeciaAssets/Textures/texSmokePuffSmallNormal.png
 - Assets/AutimeciaAssets/Textures/chaos_area.png
 - Assets/AutimeciaAssets/Animations/animAutimecia.controller
@@ -172,8 +190,10 @@ Assets:
 - Assets/Shaders/environment/hggrass.shader
 - Assets/AutimeciaAssets/Textures/texCloudDifferenceBW1.png
 - Assets/AutimeciaAssets/Textures/chaos_cursor.png
+- Assets/AutimeciaAssets/Materials/matHatTrail.mat
 - Assets/AutimeciaAssets/Textures/texCloudDifferenceBW2.png
 - Assets/AutimeciaAssets/Textures/autimecia_body.png
+- Assets/AutimeciaAssets/Textures/texNormalIcePainted.png
 - Assets/AutimeciaAssets/Icons/texAutimeciaIcon.png
 - Assets/AutimeciaAssets/AutimeciaDisplay.prefab
 - Assets/AutimeciaAssets/Null.prefab
@@ -190,6 +210,7 @@ Assets:
 - Assets/AutimeciaAssets/Animations/TrilbyBeam.anim
 - Assets/AutimeciaAssets/Textures/texCloudOrganic1.png
 - Assets/AutimeciaAssets/Animations/TrilbyFire.anim
+- Assets/AutimeciaAssets/Animations/EarthSpearIdle.anim
 - Assets/AutimeciaAssets/Materials/matBody.mat
 - Assets/AutimeciaAssets/Mesh/donut3Mesh.asset
 - Assets/AutimeciaAssets/Materials/matBeamOuter.mat
@@ -207,6 +228,7 @@ Assets:
 - Assets/AutimeciaAssets/Materials/matTracerBright.mat
 - Assets/AutimeciaAssets/Textures/texRampLunarWardDecal.png
 - Assets/AutimeciaAssets/Materials/matRipple.mat
+- Assets/AutimeciaAssets/Textures/buff_wind.png
 - Assets/Shaders/deferred/hgsnowtopped.shader
 - Assets/AutimeciaAssets/Animations/AimPitchMask.mask
 - Assets/AutimeciaAssets/Animations/WingMask.mask
